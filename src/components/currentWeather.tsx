@@ -1,5 +1,19 @@
-export default function CurrentWeather() {
+import Forecast from "@/interfaces/forecast";
+import useForecast from "@/services/useForecast";
+
+interface CurrentWeatherProps {
+    location: string;
+}
+
+export default function CurrentWeather({location}: CurrentWeatherProps) {
+
+    const {forecast, isLoading, isError} = useForecast()
+    if (isError) return <div>failed to load</div>
+    if (isLoading) return <div>loading...</div>
+    const currentForecast = forecast.properties.periods[0];
+    const updatedTime = new Date(forecast.properties.updateTime)
     return (
+
         <div style={{
             display: "flex",
             flexDirection: "column",
@@ -8,15 +22,14 @@ export default function CurrentWeather() {
             textAlign: "center"
         }}>
             <div>
-                <p>San Antonio, Texas</p>
-                <p>☁️ 77° F</p>
-                <p>Partly Sunny</p>
-                <p>Updated as of 8:15 PM</p>
+                <p>{location}</p>
+                <p>{currentForecast.temperature}° F</p>
+                <p>{currentForecast.shortForecast}</p>
+                <p>{`Updated as of ${updatedTime.getHours()}:${updatedTime.getMinutes()}`}</p>
             </div>
             <div>
-                <p><span>Feels like 77°</span> <span>Wind 15 mph</span> <span>Visibility 9.9 mi</span></p>
-                <p><span>Barometer 29.79 in</span> <span>Humidity 70%</span> <span>Dew Point 67°</span></p>
-                <p><span>Air Quality Index 48</span> <span>Severity</span> <span>Good air quality</span></p>
+                <p><span>{currentForecast.windSpeed} {currentForecast.windDirection}</span></p>
+                <p><span>Humidity {currentForecast.relativeHumidity.value}%</span> <span>Dew Point {9/5 * currentForecast.dewpoint.value + 32}°</span></p>
             </div>
         </div>);
 }

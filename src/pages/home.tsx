@@ -1,7 +1,10 @@
 import CurrentWeather from "@/components/currentWeather";
 import TenDayForecast from "@/components/tenDayForecast";
+import useForecast from "@/services/useForecast";
 
 export default function Home() {
+
+
     return (
         <div style={{
             display: "flex",
@@ -10,7 +13,7 @@ export default function Home() {
             justifyContent: "center",
         }}>
             <h1 style={{textAlign: "center"}}>Forecast</h1>
-            <CurrentWeather/>
+            <CurrentWeather location={"Converse, Texas"} />
             <TenDayForecast/>
         </div>
     )
