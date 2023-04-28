@@ -1,5 +1,4 @@
-import Forecast from "@/interfaces/forecast";
-import useForecast from "@/services/useForecast";
+import {useForecast} from "@/services/useForecast";
 
 interface CurrentWeatherProps {
     location: string;
@@ -29,7 +28,8 @@ export default function CurrentWeather({location}: CurrentWeatherProps) {
             </div>
             <div>
                 <p><span>{currentForecast.windSpeed} {currentForecast.windDirection}</span></p>
-                <p><span>Humidity {currentForecast.relativeHumidity.value}%</span> <span>Dew Point {9/5 * currentForecast.dewpoint.value + 32}°</span></p>
+                <p><span>Humidity {currentForecast.relativeHumidity.value}%</span>
+                    <span>Dew Point {9 / 5 * currentForecast.dewpoint.value + 32}°</span></p>
             </div>
         </div>);
 }

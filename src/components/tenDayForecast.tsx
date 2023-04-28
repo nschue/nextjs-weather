@@ -1,10 +1,25 @@
-import useForecast from "@/services/useForecast";
-
-const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+import {useForecast} from "@/services/useForecast";
+import {days} from "@/pages/home";
 
 function DailyForecast({forecast}: { forecast: any }) {
+
+    const date = new Date(forecast.startTime).getDate();
+
+    function showHourly() {
+        const hourlyForecast = document.getElementById(String(date))
+        Array.from(document.getElementsByClassName("hourly")).forEach((hourly) => {
+                if (!hourly.classList.contains("hidden")) {
+                    hourly.classList.add("hidden");
+                }
+            }
+        )
+        if (hourlyForecast) {
+            hourlyForecast.classList.remove("hidden");
+        }
+    }
+
     return (
-        <div className={"w-36 flex-shrink-0 p-2 hover:border-2 active:bg-gray-400"}>
+        <div className={"w-36 flex-shrink-0 p-2 hover:border-2 active:bg-gray-400"} onClick={showHourly}>
             <p>{forecast.name}</p>
             <p>☁️</p>
             <p className={"break-normal"}>{forecast.temperature}°</p>
